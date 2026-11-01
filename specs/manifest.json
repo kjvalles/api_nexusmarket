@@ -1,0 +1,120 @@
+{
+  "$schema": "./.omni/runtime/schema/manifest.schema.json",
+  "schemaVersion": 1,
+  "project": "nexusmarcket",
+  "version": "0.6.0",
+  "profile": "general",
+  "stack": "Monorepo: Java / Maven",
+  "documentationStandard": "JavaDoc",
+  "qualityGates": "docker compose exec -T nexusmarcket-app mvn test",
+  "agent": "antigravity",
+  "active_spec": "007-phase-7-seeder-e2e",
+  "active_archetype": "feature",
+  "specs": [
+    {
+      "id": "001",
+      "type": "feature",
+      "slug": "001-phase-1-infra-docker-pom",
+      "title": "Phase 1 Infra Docker Pom",
+      "status": "COMPLETED",
+      "created_at": "2026-10-20",
+      "branch": "feat/001-phase-1-infra-docker-pom",
+      "updated_at": "2026-10-20T23:41:21.541Z",
+      "completed_at": "2026-10-20T23:41:21.541Z",
+      "verification": {
+        "mode": "automated",
+        "verifiedAt": "2026-10-20T23:41:13.677Z",
+        "fingerprint": "b5ec23828ba3967c1ebf1e9dda96acd87c8ee9b83d04bf6b2e2107762825f74f"
+      }
+    },
+    {
+      "id": "002",
+      "type": "feature",
+      "slug": "002-phase-2-domain-ports",
+      "title": "Phase 2 Domain Ports",
+      "status": "COMPLETED",
+      "created_at": "2026-10-20",
+      "branch": "feat/002-phase-2-domain-ports",
+      "updated_at": "2026-10-21T03:08:47.535Z",
+      "completed_at": "2026-10-21T03:08:47.535Z",
+      "verification": {
+        "mode": "automated",
+        "verifiedAt": "2026-10-21T03:08:35.357Z",
+        "fingerprint": "b81fec39c3dd138c2675f04383fe508e0b50db17976ebf32eabebbca04e1a711"
+      }
+    },
+    {
+      "id": "003",
+      "type": "feature",
+      "slug": "003-phase-3-application-usecases",
+      "title": "Phase 3 Application Use Cases",
+      "status": "COMPLETED",
+      "created_at": "2026-10-25",
+      "branch": "feat/003-phase-3-application-usecases",
+      "updated_at": "2026-10-25T03:36:00.109Z",
+      "completed_at": "2026-10-25T03:36:00.109Z",
+      "verification": {
+        "mode": "automated",
+        "verifiedAt": "2026-10-25T03:35:50.834Z",
+        "fingerprint": "ee319a849eb4a39ef265230f7b76ae3620dcae63c029d33ceee1b068eecbcf5f"
+      }
+    },
+    {
+      "id": "004",
+      "type": "feature",
+      "slug": "004-phase-4-security-jwt",
+      "title": "Phase 4 Security and JWT",
+      "status": "COMPLETED",
+      "created_at": "2026-10-25",
+      "branch": "feat/004-phase-4-security-jwt",
+      "updated_at": "2026-10-25T04:12:07.088Z",
+      "completed_at": "2026-10-25T04:12:07.088Z",
+      "verification": {
+        "mode": "automated",
+        "verifiedAt": "2026-10-25T04:11:56.702Z",
+        "fingerprint": "3ef88f93410b7901e6e601f2fa1c49495fa558e9ee04d23b12b821f70ee8d069"
+      }
+    },
+    {
+      "id": "005",
+      "type": "feature",
+      "slug": "005-phase-5-persistence-polyglot",
+      "title": "Phase 5 Persistence Polyglot",
+      "status": "COMPLETED",
+      "created_at": "2026-10-25",
+      "branch": "feat/005-phase-5-persistence-polyglot",
+      "updated_at": "2026-10-25T05:03:19.903Z",
+      "completed_at": "2026-10-25T05:03:19.903Z",
+      "verification": {
+        "mode": "automated",
+        "verifiedAt": "2026-10-25T05:03:07.019Z",
+        "fingerprint": "29d56890b996ed57d3bcfbf28244c85e1222b0f67a60c5bc2a33ee4f73ae96b4"
+      }
+    },
+    {
+      "id": "006",
+      "type": "feature",
+      "slug": "006-phase-6-rest-presentation",
+      "title": "Phase 6 REST Presentation",
+      "status": "COMPLETED",
+      "created_at": "2026-10-25",
+      "branch": "feat/006-phase-6-rest-presentation",
+      "updated_at": "2026-10-25T21:14:32.234Z",
+      "completed_at": "2026-10-25T21:14:32.234Z",
+      "verification": {
+        "mode": "automated",
+        "verifiedAt": "2026-10-25T21:14:21.188Z",
+        "fingerprint": "59d4f0205138fe38530b1d51a6c79459c573b7fafc170242ff992472d77ed818"
+      }
+    },
+    {
+      "id": "007",
+      "type": "feature",
+      "slug": "007-phase-7-seeder-e2e",
+      "title": "Phase 7 Database Seeder and E2E Verification",
+      "status": "IN_PROGRESS",
+      "created_at": "2026-10-25",
+      "branch": "feat/007-phase-7-seeder-e2e"
+    }
+  ]
+}
