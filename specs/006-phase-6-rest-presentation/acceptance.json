@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "criteria": [
+    {
+      "id": "AC-01",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "PublicAccessController y AuthRestMapper verificados con pruebas MockMvc para login, registro, catalogo y detalle"
+    },
+    {
+      "id": "AC-02",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "BuyerController y BuyerRestMapper verificados con pruebas MockMvc para carrito, checkout, historial y cancelacion"
+    },
+    {
+      "id": "AC-03",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "SellerController y SellerRestMapper verificados con pruebas MockMvc para productos, inventario propio y estados"
+    },
+    {
+      "id": "AC-04",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "LogisticsOperatorController y LogisticsRestMapper verificados con pruebas MockMvc para entrada de stock y despacho"
+    },
+    {
+      "id": "AC-05",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "AdministratorController y AdminRestMapper verificados con pruebas MockMvc para alta de vendedores, bodegas y estados"
+    },
+    {
+      "id": "AC-06",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "SupervisorController y SupervisorRestMapper verificados con pruebas MockMvc para bitacora de auditoria y monitoreo"
+    },
+    {
+      "id": "AC-07",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "DTOs con Bean Validation (13 requests, 15 responses) y 6 mappers REST verificados en toda la suite MockMvc"
+    },
+    {
+      "id": "AC-08",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "GlobalExceptionHandler con @RestControllerAdvice verificado para 400, 401, 403, 404, 409 y propagacion X-Request-Id"
+    },
+    {
+      "id": "AC-09",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "docker compose exec -T nexusmarcket-app mvn test exitoso: 65 tests ejecutados, 0 fallos, 0 errores, BUILD SUCCESS"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "criteria": [
+    {
+      "id": "AC-01",
+      "status": "pending",
+      "method": null,
+      "evidence": ""
+    },
+    {
+      "id": "AC-02",
+      "status": "pending",
+      "method": null,
+      "evidence": ""
+    },
+    {
+      "id": "AC-03",
+      "status": "pending",
+      "method": null,
+      "evidence": ""
+    },
+    {
+      "id": "AC-04",
+      "status": "pending",
+      "method": null,
+      "evidence": ""
+    },
+    {
+      "id": "AC-05",
+      "status": "pending",
+      "method": null,
+      "evidence": ""
+    },
+    {
+      "id": "AC-06",
+      "status": "pending",
+      "method": null,
+      "evidence": ""
+    },
+    {
+      "id": "AC-07",
+      "status": "pending",
+      "method": null,
+      "evidence": ""
+    }
+  ]
+}
