@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "criteria": [
+    {
+      "id": "AC-01",
+      "status": "passed",
+      "method": "inspection",
+      "evidence": "nexusmarcket/pom.xml declara spring-boot-starter-parent 4.1.0, validation, actuator y jjwt 0.12.6."
+    },
+    {
+      "id": "AC-02",
+      "status": "passed",
+      "method": "inspection",
+      "evidence": "nexusmarcket/Dockerfile creado con imagen base maven:3.9-eclipse-temurin-17 y expone puerto 8080."
+    },
+    {
+      "id": "AC-03",
+      "status": "passed",
+      "method": "inspection",
+      "evidence": "docker-compose.yml orquesta nexus-mysql (3306), nexus-mongo (27017) y nexus-app con healthchecks y volumenes persistentes."
+    },
+    {
+      "id": "AC-04",
+      "status": "passed",
+      "method": "inspection",
+      "evidence": "nexusmarcket/src/main/resources/application.properties parametrizado con variables de entorno para MySQL, Mongo y JWT."
+    },
+    {
+      "id": "AC-05",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "curl http://127.0.0.1:8080/actuator/health retorna status UP con componentes db y mongo saludables; docker compose exec nexusmarcket-app mvn test exitoso con BUILD SUCCESS."
+    }
+  ]
+}
