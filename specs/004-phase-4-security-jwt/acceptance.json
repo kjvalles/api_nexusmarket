@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "criteria": [
+    {
+      "id": "AC-01",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "BCryptPasswordServiceAdapter implementa PasswordServicePort. Verificado en BCryptPasswordServiceAdapterTest con codificación y validación de coincidencia de hashes."
+    },
+    {
+      "id": "AC-02",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "JwtServiceAdapter implementa JwtServicePort usando JJWT 0.12.6, incluyendo claims sub, ver, role, email y status, validando firma HMAC-SHA256."
+    },
+    {
+      "id": "AC-03",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "AuthenticatedUserPrincipal implementa UserDetails con autoridades ROLE_<ROL> y expone atributos del dominio de forma inmutable."
+    },
+    {
+      "id": "AC-04",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "JwtAuthenticationFilter extrae Bearer token, verifica firma y valida que claim 'ver' coincida con authTokenVersion del usuario. Tokens anteriores se rechazan de inmediato."
+    },
+    {
+      "id": "AC-05",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "SecurityConfig define SecurityFilterChain stateless (SessionCreationPolicy.STATELESS), CORS habilitado con FRONTEND_ORIGIN, CSRF deshabilitado y rutas mapeadas a roles."
+    },
+    {
+      "id": "AC-06",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "Suite SecurityAdaptersTest implementada con 6 pruebas unitarias JUnit 5 cubriendo cifrado, emisión, extracción, mapeo de roles y filtro de invalidación."
+    },
+    {
+      "id": "AC-07",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "Ejecución exitosa en Docker: 'docker compose exec -T nexusmarcket-app mvn test'. Tests run: 36, Failures: 0, Errors: 0, Skipped: 0. BUILD SUCCESS."
+    }
+  ]
+}
