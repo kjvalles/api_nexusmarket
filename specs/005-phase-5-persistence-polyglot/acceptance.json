@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "criteria": [
+    {
+      "id": "AC-01",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "Implementados UserJpaAdapter, BuyerJpaAdapter y SellerJpaAdapter con UserJpaEntity (@Inheritance JOINED), BuyerJpaEntity y SellerJpaEntity, repositorios Spring Data y mappers bidireccionales. Verificado en PersistenceAdaptersTest.testUserJpaAdapter, testBuyerJpaAdapter y testSellerJpaAdapter."
+    },
+    {
+      "id": "AC-02",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "Implementado OrderJpaAdapter con OrderJpaEntity y OrderLineJpaEntity con relación @OneToMany en cascada completa y orphanRemoval=true. Verificado en PersistenceAdaptersTest.testOrderJpaAdapter."
+    },
+    {
+      "id": "AC-03",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "Implementados ProductStockJpaAdapter, InventoryMovementJpaAdapter y WarehouseJpaAdapter con sus respectivas entidades, repositorios y mappers. Verificado en PersistenceAdaptersTest.testProductStockJpaAdapter, testInventoryMovementJpaAdapter y testWarehouseJpaAdapter."
+    },
+    {
+      "id": "AC-04",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "Implementado ProductMongoAdapter con ProductDocument y ProductVariantDocument embebidos en colección products, consultando por catálogo publicado y vendedor. Verificado en PersistenceAdaptersTest.testProductMongoAdapter."
+    },
+    {
+      "id": "AC-05",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "Implementado ShoppingCartMongoAdapter con ShoppingCartDocument y CartItemDocument embebidos en colección shopping_carts, con borrado atómico pos-checkout. Verificado en PersistenceAdaptersTest.testShoppingCartMongoAdapter."
+    },
+    {
+      "id": "AC-06",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "Implementado AuditLogMongoAdapter con AuditLogDocument en colección audit_logs, con consultas por actor y entidad. Verificado en PersistenceAdaptersTest.testAuditLogMongoAdapter."
+    },
+    {
+      "id": "AC-07",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "Ejecución exitosa del quality gate en Docker: 'docker compose exec -T nexusmarcket-app mvn test'. Tests run: 46, Failures: 0, Errors: 0, Skipped: 0. BUILD SUCCESS."
+    }
+  ]
+}
