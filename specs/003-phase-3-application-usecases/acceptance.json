@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "criteria": [
+    {
+      "id": "AC-01",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "PublicAccessUseCaseImpl implementado en application/adapters/useCases orquestando login, logout, registro de comprador y catálogo público; validado en UseCasesTest.testPublicAccessUseCase."
+    },
+    {
+      "id": "AC-02",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "BuyerUseCaseImpl implementado en application/adapters/useCases orquestando carrito de compra, checkout a orden con recálculo de totales, consulta propia y rechazo de órdenes ajenas arrojando UnauthorizedRoleOperationException; validado en UseCasesTest.testBuyerUseCase."
+    },
+    {
+      "id": "AC-03",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "SellerUseCaseImpl implementado en application/adapters/useCases orquestando creación, edición, publicación, suspensión y consulta de inventario con validación de propiedad vendorId; validado en UseCasesTest.testSellerUseCase."
+    },
+    {
+      "id": "AC-04",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "LogisticsOperatorUseCaseImpl implementado en application/adapters/useCases orquestando ingresos de stock, ajustes por merma, despacho con guía y entrega; validado en UseCasesTest.testLogisticsOperatorUseCase."
+    },
+    {
+      "id": "AC-05",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "AdministratorUseCaseImpl implementado en application/adapters/useCases orquestando registro de vendedores con hash de contraseña, creación de bodegas y cambio de estado de usuario con revocación de tokens vía bumpAuthTokenVersion(); validado en UseCasesTest.testAdministratorUseCase."
+    },
+    {
+      "id": "AC-06",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "SupervisorUseCaseImpl implementado en application/adapters/useCases orquestando consulta de bitácoras de auditoría, trazabilidad consolidada de órdenes e inventario consolidado; validado en UseCasesTest.testSupervisorUseCase."
+    },
+    {
+      "id": "AC-07",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "DomainServicesConfig configurado en application/adapters/config exponiendo los 12 servicios de dominio puro como beans inyectables. Suite de pruebas completa (30 tests) ejecutada exitosamente en Docker con docker compose exec -T nexusmarcket-app mvn test resultando en BUILD SUCCESS (0 fallos, 0 errores)."
+    }
+  ]
+}
