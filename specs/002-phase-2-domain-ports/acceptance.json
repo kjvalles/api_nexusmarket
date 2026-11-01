@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "criteria": [
+    {
+      "id": "AC-01",
+      "status": "passed",
+      "method": "inspection",
+      "evidence": "Jerarquía de excepciones implementada bajo application/domain/exceptions: DomainException (base), NegativeStockException, InvalidOrderStateException, InvalidUserStatusException, UnauthorizedRoleOperationException, EntityNotFoundException, InvalidCredentialsException y ProductNotAvailableException."
+    },
+    {
+      "id": "AC-02",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "Entidades enriquecidas en application/domain/models: User (changeStatus, changePassword, bumpAuthTokenVersion), Buyer (manejo de balance virtual y direcciones), ProductStock (invariante de existencias no negativas, reserva, liberación y confirmación de venta), Order (ciclo de vida PENDING_PAYMENT a COMPLETED, inmutabilidad tras entrega, recálculo automático de impuestos y totales), Product (publicación, suspensión y variantes)."
+    },
+    {
+      "id": "AC-03",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "Value Objects fortificados e inmutables en application/domain/valueobjects: OrderLine y CartItem con cálculo automático de subtotal, inmutabilidad estricta de atributos y métodos equals/hashCode por valor."
+    },
+    {
+      "id": "AC-04",
+      "status": "passed",
+      "method": "inspection",
+      "evidence": "Puertos de salida en application/domain/ports/out: UserRepositoryPort, BuyerRepositoryPort, SellerRepositoryPort, ProductRepositoryPort, OrderRepositoryPort, ProductStockRepositoryPort, InventoryMovementRepositoryPort, WarehouseRepositoryPort, ShoppingCartRepositoryPort, AuditLogRepositoryPort, JwtServicePort y PasswordServicePort."
+    },
+    {
+      "id": "AC-05",
+      "status": "passed",
+      "method": "inspection",
+      "evidence": "Puertos de entrada segregados en application/domain/ports/in: PublicAccessPort, BuyerPort, SellerPort, LogisticsOperatorPort, AdministratorPort y SupervisorPort."
+    },
+    {
+      "id": "AC-06",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "Servicios de dominio atómicos en application/domain/services: LoginService, RegisterBuyerService, ChangePasswordService, LogoutService, CreateOrderService, TransitionOrderStatusService, CancelOrderService, RegisterInventoryMovementService, CheckStockAvailabilityService, CreateProductService, PublishProductService, UpdateProductService. Pureza total: cero dependencias o anotaciones de Spring/JPA en el dominio."
+    },
+    {
+      "id": "AC-07",
+      "status": "passed",
+      "method": "automated",
+      "evidence": "Ejecución de suite completa JUnit 5 (24 tests) ejecutada dentro del contenedor con docker compose exec -T nexusmarcket-app mvn test resultando en BUILD SUCCESS (0 errores, 0 fallos)."
+    }
+  ]
+}
