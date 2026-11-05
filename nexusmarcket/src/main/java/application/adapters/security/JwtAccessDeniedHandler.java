@@ -51,7 +51,7 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.FORBIDDEN.value())
                 .error("Acceso denegado")
-                .message("No posee los privilegios ni el rol requerido para realizar esta operación.")
+                .message("Acceso no autorizado al recurso solicitado.")
                 .path(request.getRequestURI())
                 .requestId(requestId)
                 .build();

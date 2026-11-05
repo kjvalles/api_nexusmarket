@@ -47,7 +47,6 @@ public class OpenApiConfig {
                                 .scheme("bearer")
                                 .bearerFormat("JWT")
                                 .description("Ingrese el token JWT obtenido del endpoint POST /api/v1/auth/login. "
-                                        + "Swagger incluirá automáticamente la cabecera 'Authorization: Bearer <token>'.\n\n"
-                                        + "Credenciales demo: clave común **Password123*** para todos los roles.")));
+                                        + "Swagger incluirá automáticamente la cabecera 'Authorization: Bearer <token>' en cada solicitud protegida.")));
     }
 }
