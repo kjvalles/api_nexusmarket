@@ -1,6 +1,7 @@
 package application.domain.ports.in;
 
 import application.domain.models.ProductStock;
+import application.domain.models.Warehouse;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface LogisticsOperatorPort {
     void deliverOrder(String operatorId, Long orderId);
 
     List<ProductStock> getWarehouseStock(String warehouseId);
+
+    List<Warehouse> listWarehouses();
 }

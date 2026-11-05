@@ -300,11 +300,17 @@ class UseCasesTest {
         FakeProductStockRepository stockRepo = new FakeProductStockRepository();
         FakeInventoryMovementRepository movRepo = new FakeInventoryMovementRepository();
         FakeOrderRepository orderRepo = new FakeOrderRepository();
+        FakeWarehouseRepository whRepo = new FakeWarehouseRepository();
+
+        Warehouse wh = new Warehouse();
+        wh.setId("wh-1");
+        wh.setName("Bodega Principal");
+        whRepo.save(wh);
 
         RegisterInventoryMovementService invService = new RegisterInventoryMovementService(stockRepo, movRepo);
         TransitionOrderStatusService transService = new TransitionOrderStatusService(orderRepo);
 
-        LogisticsOperatorUseCaseImpl logistics = new LogisticsOperatorUseCaseImpl(invService, transService, stockRepo);
+        LogisticsOperatorUseCaseImpl logistics = new LogisticsOperatorUseCaseImpl(invService, transService, stockRepo, whRepo);
 
         ProductStock stock = logistics.registerInflow("op-1", "prod-1", null, "wh-1", 50, "Entrada lote 1");
         assertEquals(50, stock.getAvailableQuantity());
@@ -317,10 +323,16 @@ class UseCasesTest {
         orderRepo.save(order);
 
         logistics.dispatchOrder("op-1", order.getId(), "GUIA-999");
-        assertEquals(OrderStatus.DISPATCHED, orderRepo.findById(order.getId()).get().getStatus());
+        Order dispatchedOrder = orderRepo.findById(order.getId()).get();
+        assertEquals(OrderStatus.DISPATCHED, dispatchedOrder.getStatus());
+        assertTrue(dispatchedOrder.getAdditionalNotes().contains("GUIA-999"));
 
         logistics.deliverOrder("op-1", order.getId());
         assertEquals(OrderStatus.DELIVERED, orderRepo.findById(order.getId()).get().getStatus());
+
+        List<Warehouse> warehouses = logistics.listWarehouses();
+        assertEquals(1, warehouses.size());
+        assertEquals("wh-1", warehouses.get(0).getId());
     }
 
     // --- TEST 5: AdministratorUseCaseImpl ---
@@ -370,6 +382,15 @@ class UseCasesTest {
 
         // Consulta de usuario no existente lanza EntityNotFoundException
         assertThrows(EntityNotFoundException.class, () -> admin.getUserById("usr-inexistente"));
+
+        // Creación y listado de bodegas
+        Warehouse wh = new Warehouse();
+        wh.setId("wh-admin-1");
+        wh.setName("Bodega Admin");
+        admin.createWarehouse("admin-1", wh);
+        List<Warehouse> warehouses = admin.listWarehouses();
+        assertFalse(warehouses.isEmpty());
+        assertEquals("wh-admin-1", warehouses.get(0).getId());
     }
 
     // --- TEST 6: SupervisorUseCaseImpl ---

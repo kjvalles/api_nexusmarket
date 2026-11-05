@@ -24,4 +24,6 @@ public interface AdministratorPort {
     List<User> listUsers();
 
     List<Seller> listSellers();
+
+    List<Warehouse> listWarehouses();
 }

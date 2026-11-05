@@ -4,9 +4,12 @@ import application.adapters.config.OpenApiConfig;
 import application.adapters.rest.dtos.requests.DispatchOrderRequestDto;
 import application.adapters.rest.dtos.requests.RegisterStockMovementRequestDto;
 import application.adapters.rest.dtos.responses.ProductStockResponseDto;
+import application.adapters.rest.dtos.responses.WarehouseResponseDto;
+import application.adapters.rest.mappers.AdminRestMapper;
 import application.adapters.rest.mappers.LogisticsRestMapper;
 import application.adapters.security.AuthenticatedUserPrincipal;
 import application.domain.models.ProductStock;
+import application.domain.models.Warehouse;
 import application.domain.ports.in.LogisticsOperatorPort;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -86,6 +89,14 @@ public class LogisticsOperatorController {
     public ResponseEntity<List<ProductStockResponseDto>> getWarehouseStock(@PathVariable String warehouseId) {
         List<ProductStock> stocks = logisticsOperatorPort.getWarehouseStock(warehouseId);
         return ResponseEntity.ok(LogisticsRestMapper.toResponseDtoList(stocks));
+    }
+
+    @Operation(summary = "Listar bodegas operativas", description = "Retorna el listado de bodegas registradas para consulta y operación de existencias.")
+    @ApiResponse(responseCode = "200", description = "Listado de bodegas obtenido")
+    @GetMapping("/warehouses")
+    public ResponseEntity<List<WarehouseResponseDto>> listWarehouses() {
+        List<Warehouse> warehouses = logisticsOperatorPort.listWarehouses();
+        return ResponseEntity.ok(AdminRestMapper.toWarehouseResponseDtoList(warehouses));
     }
 
     @Operation(summary = "Despachar pedido con guía de transporte", description = "Transiciona el estado de la orden a DISPATCHED y asigna el número de seguimiento correspondiente.")

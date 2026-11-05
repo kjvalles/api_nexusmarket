@@ -1,8 +1,10 @@
 package application.adapters.useCases;
 
 import application.domain.models.ProductStock;
+import application.domain.models.Warehouse;
 import application.domain.ports.in.LogisticsOperatorPort;
 import application.domain.ports.out.ProductStockRepositoryPort;
+import application.domain.ports.out.WarehouseRepositoryPort;
 import application.domain.services.inventory.RegisterInventoryMovementService;
 import application.domain.services.order.TransitionOrderStatusService;
 import application.domain.valueobjects.InventoryMovementType;
@@ -21,6 +23,7 @@ public class LogisticsOperatorUseCaseImpl implements LogisticsOperatorPort {
     private final RegisterInventoryMovementService registerInventoryMovementService;
     private final TransitionOrderStatusService transitionOrderStatusService;
     private final ProductStockRepositoryPort productStockRepositoryPort;
+    private final WarehouseRepositoryPort warehouseRepositoryPort;
 
     @Override
     public ProductStock registerInflow(String operatorId, String productId, String variantId,
@@ -61,7 +64,7 @@ public class LogisticsOperatorUseCaseImpl implements LogisticsOperatorPort {
 
     @Override
     public void dispatchOrder(String operatorId, Long orderId, String trackingNumber) {
-        transitionOrderStatusService.markAsDispatched(orderId);
+        transitionOrderStatusService.markAsDispatched(orderId, trackingNumber);
     }
 
     @Override
@@ -75,5 +78,10 @@ public class LogisticsOperatorUseCaseImpl implements LogisticsOperatorPort {
             throw new IllegalArgumentException("El identificador de bodega no puede ser nulo o vacío.");
         }
         return productStockRepositoryPort.findByWarehouseId(warehouseId);
+    }
+
+    @Override
+    public List<Warehouse> listWarehouses() {
+        return warehouseRepositoryPort.findAll();
     }
 }

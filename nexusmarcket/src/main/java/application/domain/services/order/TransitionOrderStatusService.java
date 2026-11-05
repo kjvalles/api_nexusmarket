@@ -26,8 +26,17 @@ public class TransitionOrderStatusService {
     }
 
     public Order markAsDispatched(Long orderId) {
+        return markAsDispatched(orderId, null);
+    }
+
+    public Order markAsDispatched(Long orderId, String trackingNumber) {
         Order order = findOrder(orderId);
         order.markAsDispatched();
+        if (trackingNumber != null && !trackingNumber.isBlank()) {
+            String note = "Despachado con guía: " + trackingNumber;
+            order.setAdditionalNotes(order.getAdditionalNotes() == null || order.getAdditionalNotes().isBlank()
+                    ? note : order.getAdditionalNotes() + " | " + note);
+        }
         return orderRepositoryPort.save(order);
     }
 

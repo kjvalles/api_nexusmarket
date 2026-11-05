@@ -127,6 +127,11 @@ public final class AdminRestMapper {
                 .build();
     }
 
+    public static List<WarehouseResponseDto> toWarehouseResponseDtoList(List<Warehouse> warehouses) {
+        if (warehouses == null) return Collections.emptyList();
+        return warehouses.stream().map(AdminRestMapper::toResponseDto).collect(Collectors.toList());
+    }
+
     public static UserResponseDto toResponseDto(User user) {
         if (user == null) return null;
         return UserResponseDto.builder()

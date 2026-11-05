@@ -155,4 +155,9 @@ public class AdministratorUseCaseImpl implements AdministratorPort {
     public List<Seller> listSellers() {
         return sellerRepositoryPort.findAll();
     }
+
+    @Override
+    public List<Warehouse> listWarehouses() {
+        return warehouseRepositoryPort.findAll();
+    }
 }

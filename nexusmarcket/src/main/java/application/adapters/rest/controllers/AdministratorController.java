@@ -133,6 +133,14 @@ public class AdministratorController {
         return ResponseEntity.ok(AdminRestMapper.toSellerResponseDtoList(sellers));
     }
 
+    @Operation(summary = "Listar todas las bodegas", description = "Retorna el listado consolidado de bodegas registradas en la plataforma (Marketplace y Seller).")
+    @ApiResponse(responseCode = "200", description = "Listado de bodegas obtenido")
+    @GetMapping("/warehouses")
+    public ResponseEntity<List<WarehouseResponseDto>> listWarehouses() {
+        List<Warehouse> warehouses = administratorPort.listWarehouses();
+        return ResponseEntity.ok(AdminRestMapper.toWarehouseResponseDtoList(warehouses));
+    }
+
     private String resolveAdminId(AuthenticatedUserPrincipal principal) {
         if (principal == null || principal.getUser() == null) {
             throw new IllegalArgumentException("Usuario no autenticado.");
