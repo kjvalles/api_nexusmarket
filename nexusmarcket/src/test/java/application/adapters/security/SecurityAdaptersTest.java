@@ -185,4 +185,50 @@ class SecurityAdaptersTest {
 
         assertNull(SecurityContextHolder.getContext().getAuthentication());
     }
+
+    // --- 5. JwtAuthenticationEntryPoint ---
+    @Test
+    @DisplayName("JwtAuthenticationEntryPoint: retorna HTTP 401 con JSON estructurado ante acceso no autenticado")
+    void testAuthenticationEntryPointReturnsStructured401() throws IOException {
+        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+        mapper.registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
+        JwtAuthenticationEntryPoint entryPoint = new JwtAuthenticationEntryPoint(mapper);
+
+        MockHttpServletRequest request = new MockHttpServletRequest("GET", "/api/v1/admin/users");
+        request.addHeader("X-Request-Id", "test-req-401");
+        MockHttpServletResponse response = new MockHttpServletResponse();
+
+        entryPoint.commence(request, response, new org.springframework.security.authentication.BadCredentialsException("Full authentication is required"));
+
+        assertEquals(401, response.getStatus());
+        assertEquals("application/json;charset=UTF-8", response.getContentType());
+        String body = response.getContentAsString();
+        assertTrue(body.contains("\"status\":401"));
+        assertTrue(body.contains("\"error\":\"No autenticado\""));
+        assertTrue(body.contains("\"requestId\":\"test-req-401\""));
+        assertTrue(body.contains("\"path\":\"/api/v1/admin/users\""));
+    }
+
+    // --- 6. JwtAccessDeniedHandler ---
+    @Test
+    @DisplayName("JwtAccessDeniedHandler: retorna HTTP 403 con JSON estructurado ante rol insuficiente")
+    void testAccessDeniedHandlerReturnsStructured403() throws IOException {
+        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+        mapper.registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
+        JwtAccessDeniedHandler accessDeniedHandler = new JwtAccessDeniedHandler(mapper);
+
+        MockHttpServletRequest request = new MockHttpServletRequest("POST", "/api/v1/buyer/orders/checkout");
+        request.addHeader("X-Request-Id", "test-req-403");
+        MockHttpServletResponse response = new MockHttpServletResponse();
+
+        accessDeniedHandler.handle(request, response, new org.springframework.security.access.AccessDeniedException("Access is denied"));
+
+        assertEquals(403, response.getStatus());
+        assertEquals("application/json;charset=UTF-8", response.getContentType());
+        String body = response.getContentAsString();
+        assertTrue(body.contains("\"status\":403"));
+        assertTrue(body.contains("\"error\":\"Acceso denegado\""));
+        assertTrue(body.contains("\"requestId\":\"test-req-403\""));
+        assertTrue(body.contains("\"path\":\"/api/v1/buyer/orders/checkout\""));
+    }
 }
