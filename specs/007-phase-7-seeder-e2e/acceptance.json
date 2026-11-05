@@ -3,45 +3,45 @@
   "criteria": [
     {
       "id": "AC-01",
-      "status": "pending",
-      "method": null,
-      "evidence": ""
+      "status": "passed",
+      "method": "automated",
+      "evidence": "application.infrastructure.seed.DatabaseSeeder: Sembrados usuarios de los 5 roles (admin, supervisor, logistica, vendedor, comprador) con clave BCrypt Password123*. Verificado en EndToEndPlatformIntegrationTest y login REST."
     },
     {
       "id": "AC-02",
-      "status": "pending",
-      "method": null,
-      "evidence": ""
+      "status": "passed",
+      "method": "automated",
+      "evidence": "application.infrastructure.seed.DatabaseSeeder: Sembradas bodegas físicas wh-central-01 y wh-seller-01 en MySQL. Verificado en EndToEndPlatformIntegrationTest."
     },
     {
       "id": "AC-03",
-      "status": "pending",
-      "method": null,
-      "evidence": ""
+      "status": "passed",
+      "method": "automated",
+      "evidence": "application.infrastructure.seed.DatabaseSeeder: Sembrados 5 productos con variantes en catálogo políglota MongoDB (prod-laptop-01, prod-teclado-01, prod-audifonos-01, prod-antivirus-01, prod-mouse-01). Verificado en EndToEndPlatformIntegrationTest."
     },
     {
       "id": "AC-04",
-      "status": "pending",
-      "method": null,
-      "evidence": ""
+      "status": "passed",
+      "method": "automated",
+      "evidence": "application.infrastructure.seed.DatabaseSeeder: Sembradas existencias en product_stocks y movimientos kardex MANUAL_ENTRY en inventory_movements en MySQL. Verificado en EndToEndPlatformIntegrationTest."
     },
     {
       "id": "AC-05",
-      "status": "pending",
-      "method": null,
-      "evidence": ""
+      "status": "passed",
+      "method": "automated",
+      "evidence": "application.infrastructure.seed.DatabaseSeeder: Sembrado carrito de compras en MongoDB y 3 órdenes de prueba (DELIVERED, SHIPPED, PENDING_PAYMENT) con líneas en MySQL. Verificado en EndToEndPlatformIntegrationTest."
     },
     {
       "id": "AC-06",
-      "status": "pending",
-      "method": null,
-      "evidence": ""
+      "status": "passed",
+      "method": "automated",
+      "evidence": "application.infrastructure.seed.DatabaseSeeder: Sembrados registros de auditoría iniciales en colección audit_logs de MongoDB. Verificado en EndToEndPlatformIntegrationTest."
     },
     {
       "id": "AC-07",
-      "status": "pending",
-      "method": null,
-      "evidence": ""
+      "status": "passed",
+      "method": "automated",
+      "evidence": "EndToEndPlatformIntegrationTest ejecutó 4 pruebas E2E integrales exitosamente. Suite completa de 72 pruebas en Docker (mvn test) superada con 0 fallas y 0 errores."
     }
   ]
 }

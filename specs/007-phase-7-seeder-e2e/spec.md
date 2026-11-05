@@ -2,7 +2,7 @@
 
 Fecha: 2026-10-25  
 Tipo: feature  
-Estado: In Progress  
+Estado: Completed  
 
 ## 0. Fase de Clarificación y Supuestos
 
@@ -27,7 +27,7 @@ Estado: In Progress
 
 ### Criterios de Aceptación
 
-- [ ] **AC-01**: **Sembrador de Cuentas de Usuario y Roles del Sistema**
+- [x] **AC-01**: **Sembrador de Cuentas de Usuario y Roles del Sistema**
   - Implementar en `DatabaseSeeder` la creación idempotente de cuentas de prueba para los 5 roles del sistema con clave encriptada `Password123*`:
     - Administrador: `admin@nexusmarcket.com` (rol `ADMINISTRATOR`, documento `CC1000000001`, activo).
     - Supervisor: `supervisor@nexusmarcket.com` (rol `SUPERVISOR`, documento `CC1000000002`, activo).
@@ -35,33 +35,33 @@ Estado: In Progress
     - Vendedor: `vendedor@nexusmarcket.com` (rol `SELLER`, NIT `NIT-900123456`, razón social "Tech Store Colombia", activo).
     - Comprador: `comprador@nexusmarcket.com` (rol `BUYER`, documento `CC1000000004`, saldo virtual, dirección física en Bogotá, activo).
 
-- [ ] **AC-02**: **Sembrador de Infraestructura Logística (Bodegas)**
+- [x] **AC-02**: **Sembrador de Infraestructura Logística (Bodegas)**
   - Crear en MySQL mediante [`WarehouseRepositoryPort`](../../nexusmarcket/src/main/java/application/domain/ports/out/WarehouseRepositoryPort.java) al menos dos bodegas físicas:
     - Bodega Central Marketplace (`wh-central-01`, tipo `MARKETPLACE`, capacidad 10000 unidades, dirección Bogotá).
     - Bodega Vendedor Tech (`wh-seller-01`, tipo `SELLER`, vinculada al vendedor semilla, capacidad 2500 unidades, dirección Medellín).
 
-- [ ] **AC-03**: **Sembrador de Catálogo Políglota de Productos (MongoDB)**
+- [x] **AC-03**: **Sembrador de Catálogo Políglota de Productos (MongoDB)**
   - Crear en MongoDB mediante [`ProductRepositoryPort`](../../nexusmarcket/src/main/java/application/domain/ports/out/ProductRepositoryPort.java):
     - Al menos 3 productos físicos publicados con variantes activas (SKUs, colores, precios base y adicionales): e.g. "Laptop Gamer Pro", "Teclado Mecánico RGB", "Audífonos Inalámbricos ANC".
     - Al menos 1 producto digital publicado: "Licencia Suite Antivirus Pro".
     - Al menos 1 producto en estado suspendido para validar filtros de visibilidad pública.
 
-- [ ] **AC-04**: **Sembrador de Inventario y Movimientos Kardex (MySQL JPA)**
+- [x] **AC-04**: **Sembrador de Inventario y Movimientos Kardex (MySQL JPA)**
   - Crear en MySQL mediante [`ProductStockRepositoryPort`](../../nexusmarcket/src/main/java/application/domain/ports/out/ProductStockRepositoryPort.java) y [`InventoryMovementRepositoryPort`](../../nexusmarcket/src/main/java/application/domain/ports/out/InventoryMovementRepositoryPort.java):
     - Existencias positivas disponibles para las variantes físicas en las bodegas sembradas.
     - Registro histórico de movimiento de entrada manual (`MANUAL_ENTRY`) asociado al operador logístico.
 
-- [ ] **AC-05**: **Sembrador de Carrito y Órdenes de Prueba**
+- [x] **AC-05**: **Sembrador de Carrito y Órdenes de Prueba**
   - Carrito en MongoDB ([`ShoppingCartRepositoryPort`](../../nexusmarcket/src/main/java/application/domain/ports/out/ShoppingCartRepositoryPort.java)): Carrito activo con ítems para el comprador semilla.
   - Órdenes en MySQL ([`OrderRepositoryPort`](../../nexusmarcket/src/main/java/application/domain/ports/out/OrderRepositoryPort.java)):
     - Una orden en estado `DELIVERED` con líneas congeladas y dirección de entrega.
     - Una orden en estado `DISPATCHED` con guía de rastreo y transportadora.
     - Una orden en estado `PENDING_PAYMENT` para pruebas de cancelación.
 
-- [ ] **AC-06**: **Sembrador de Bitácora de Auditoría (MongoDB)**
+- [x] **AC-06**: **Sembrador de Bitácora de Auditoría (MongoDB)**
   - Crear en MongoDB mediante [`AuditLogRepositoryPort`](../../nexusmarcket/src/main/java/application/domain/ports/out/AuditLogRepositoryPort.java) eventos representativos de auditoría (registro de vendedor, creación de bodegas e inicialización del sistema).
 
-- [ ] **AC-07**: **Suite de Verificación End-to-End (`EndToEndPlatformIntegrationTest`)**
+- [x] **AC-07**: **Suite de Verificación End-to-End (`EndToEndPlatformIntegrationTest`)**
   - Implementar prueba de integración integral que verifique el flujo comercial completo:
     1. Login de usuario comprador y obtención de JWT.
     2. Consulta de catálogo público con productos sembrados.

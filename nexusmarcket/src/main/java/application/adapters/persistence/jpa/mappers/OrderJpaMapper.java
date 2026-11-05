@@ -48,7 +48,6 @@ public final class OrderJpaMapper {
         Order domain = new Order();
         domain.setId(entity.getId());
         domain.setBuyerId(entity.getBuyerId());
-        domain.setStatus(orderStatus(entity.getStatus()));
         domain.setSubtotal(entity.getSubtotal());
         domain.setTaxes(entity.getTaxes());
         domain.setDiscounts(entity.getDiscounts());
@@ -61,8 +60,8 @@ public final class OrderJpaMapper {
             for (OrderLineJpaEntity lineEntity : entity.getLines()) {
                 OrderLine line = new OrderLine(
                         lineEntity.getProductId(),
-                        lineEntity.getProductName(),
                         lineEntity.getVariantId(),
+                        lineEntity.getProductName(),
                         lineEntity.getUnitPrice(),
                         lineEntity.getQuantity()
                 );
@@ -73,6 +72,8 @@ public final class OrderJpaMapper {
             domain.setDiscounts(entity.getDiscounts());
             domain.setTotalAmount(entity.getTotalAmount());
         }
+
+        domain.setStatus(orderStatus(entity.getStatus()));
         return domain;
     }
 
