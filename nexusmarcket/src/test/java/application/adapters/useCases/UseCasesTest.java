@@ -7,16 +7,24 @@ import application.domain.exceptions.ProductNotAvailableException;
 import application.domain.exceptions.UnauthorizedRoleOperationException;
 import application.domain.models.*;
 import application.domain.ports.out.*;
+import application.domain.services.audit.ConsultAuditLogService;
 import application.domain.services.auth.LoginService;
 import application.domain.services.auth.LogoutService;
 import application.domain.services.auth.RegisterBuyerService;
-import application.domain.services.catalog.CreateProductService;
-import application.domain.services.catalog.PublishProductService;
-import application.domain.services.catalog.UpdateProductService;
+import application.domain.services.cart.ConsultCartService;
+import application.domain.services.cart.ManageCartService;
+import application.domain.services.catalog.*;
+import application.domain.services.inventory.ConsultInventoryService;
+import application.domain.services.inventory.ManageWarehouseService;
 import application.domain.services.inventory.RegisterInventoryMovementService;
 import application.domain.services.order.CancelOrderService;
+import application.domain.services.order.ConsultOrderService;
 import application.domain.services.order.CreateOrderService;
 import application.domain.services.order.TransitionOrderStatusService;
+import application.domain.services.user.ChangeUserStatusService;
+import application.domain.services.user.ConsultUserService;
+import application.domain.services.user.RegisterSellerService;
+import application.domain.services.user.RegisterUserService;
 import application.domain.valueobjects.CartItem;
 import application.domain.valueobjects.OrderStatus;
 import application.domain.valueobjects.ProductType;
@@ -193,8 +201,9 @@ class UseCasesTest {
         LoginService loginService = new LoginService(userRepo, pwdService, jwtService);
         LogoutService logoutService = new LogoutService(userRepo);
         RegisterBuyerService regService = new RegisterBuyerService(userRepo, buyerRepo, pwdService);
+        ConsultCatalogService consultCatalogService = new ConsultCatalogService(productRepo);
 
-        PublicAccessUseCaseImpl publicAccess = new PublicAccessUseCaseImpl(loginService, logoutService, regService, productRepo);
+        PublicAccessUseCaseImpl publicAccess = new PublicAccessUseCaseImpl(loginService, logoutService, regService, consultCatalogService);
 
         Buyer buyer = new Buyer();
         buyer.setEmail("buyer@nexusmarket.com");
@@ -232,8 +241,11 @@ class UseCasesTest {
 
         CreateOrderService createOrderService = new CreateOrderService(orderRepo, prodRepo);
         CancelOrderService cancelOrderService = new CancelOrderService(orderRepo);
+        ConsultCartService consultCartService = new ConsultCartService(cartRepo);
+        ManageCartService manageCartService = new ManageCartService(cartRepo, consultCartService);
+        ConsultOrderService consultOrderService = new ConsultOrderService(orderRepo);
 
-        BuyerUseCaseImpl buyerUseCase = new BuyerUseCaseImpl(cartRepo, createOrderService, cancelOrderService, orderRepo);
+        BuyerUseCaseImpl buyerUseCase = new BuyerUseCaseImpl(consultCartService, manageCartService, createOrderService, cancelOrderService, consultOrderService);
 
         CartItem item = new CartItem(product.getId(), null, product.getName(), product.getBasePrice(), 2);
         buyerUseCase.addItemToCart("buyer-1", item);
@@ -272,8 +284,11 @@ class UseCasesTest {
         CreateProductService createService = new CreateProductService(prodRepo);
         UpdateProductService updateService = new UpdateProductService(prodRepo);
         PublishProductService publishService = new PublishProductService(prodRepo);
+        SuspendProductService suspendService = new SuspendProductService(prodRepo);
+        ConsultCatalogService consultCatalogService = new ConsultCatalogService(prodRepo);
+        ConsultInventoryService consultInventoryService = new ConsultInventoryService(stockRepo, prodRepo);
 
-        SellerUseCaseImpl sellerUseCase = new SellerUseCaseImpl(createService, updateService, publishService, prodRepo, stockRepo);
+        SellerUseCaseImpl sellerUseCase = new SellerUseCaseImpl(createService, updateService, publishService, suspendService, consultCatalogService, consultInventoryService);
 
         Product product = new Product("vendor-1", "Gorra", "ACCESORIOS", new BigDecimal("25.00"), ProductType.PHYSICAL);
         Product created = sellerUseCase.createProduct("vendor-1", product);
@@ -309,8 +324,10 @@ class UseCasesTest {
 
         RegisterInventoryMovementService invService = new RegisterInventoryMovementService(stockRepo, movRepo);
         TransitionOrderStatusService transService = new TransitionOrderStatusService(orderRepo);
+        ConsultInventoryService consultInventoryService = new ConsultInventoryService(stockRepo, null);
+        ManageWarehouseService manageWarehouseService = new ManageWarehouseService(whRepo);
 
-        LogisticsOperatorUseCaseImpl logistics = new LogisticsOperatorUseCaseImpl(invService, transService, stockRepo, whRepo);
+        LogisticsOperatorUseCaseImpl logistics = new LogisticsOperatorUseCaseImpl(invService, transService, consultInventoryService, manageWarehouseService);
 
         ProductStock stock = logistics.registerInflow("op-1", "prod-1", null, "wh-1", 50, "Entrada lote 1");
         assertEquals(50, stock.getAvailableQuantity());
@@ -344,7 +361,14 @@ class UseCasesTest {
         FakeWarehouseRepository whRepo = new FakeWarehouseRepository();
         FakePasswordService pwdService = new FakePasswordService();
 
-        AdministratorUseCaseImpl admin = new AdministratorUseCaseImpl(userRepo, sellerRepo, whRepo, pwdService);
+        RegisterUserService registerUserService = new RegisterUserService(userRepo, pwdService);
+        RegisterSellerService registerSellerService = new RegisterSellerService(userRepo, sellerRepo, pwdService);
+        ChangeUserStatusService changeUserStatusService = new ChangeUserStatusService(userRepo);
+        ConsultUserService consultUserService = new ConsultUserService(userRepo, sellerRepo);
+        ManageWarehouseService manageWarehouseService = new ManageWarehouseService(whRepo);
+
+        AdministratorUseCaseImpl admin = new AdministratorUseCaseImpl(
+                registerUserService, registerSellerService, changeUserStatusService, consultUserService, manageWarehouseService);
 
         Seller seller = new Seller();
         seller.setEmail("tienda@nexusmarket.com");
@@ -405,7 +429,12 @@ class UseCasesTest {
         orderRepo.save(new Order("buyer-1"));
         stockRepo.save(new ProductStock("prod-1", null, "wh-1", 100));
 
-        SupervisorUseCaseImpl supervisor = new SupervisorUseCaseImpl(auditRepo, orderRepo, stockRepo);
+        ConsultAuditLogService consultAuditLogService = new ConsultAuditLogService(auditRepo);
+        ConsultOrderService consultOrderService = new ConsultOrderService(orderRepo);
+        ConsultInventoryService consultInventoryService = new ConsultInventoryService(stockRepo, null);
+
+        SupervisorUseCaseImpl supervisor = new SupervisorUseCaseImpl(
+                consultAuditLogService, consultOrderService, consultInventoryService);
 
         assertEquals(1, supervisor.getAuditLogs("sup-1", null).size());
         assertEquals(1, supervisor.getAllOrders("sup-1").size());

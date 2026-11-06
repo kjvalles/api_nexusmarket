@@ -1,14 +1,13 @@
 package application.adapters.useCases;
 
-import application.domain.exceptions.ProductNotAvailableException;
 import application.domain.models.AuthenticationResult;
 import application.domain.models.Buyer;
 import application.domain.models.Product;
 import application.domain.ports.in.PublicAccessPort;
-import application.domain.ports.out.ProductRepositoryPort;
 import application.domain.services.auth.LoginService;
 import application.domain.services.auth.LogoutService;
 import application.domain.services.auth.RegisterBuyerService;
+import application.domain.services.catalog.ConsultCatalogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +15,7 @@ import java.util.List;
 
 /**
  * Caso de uso para operaciones públicas y autenticación.
+ * Delega 100% de la lógica en los servicios de dominio correspondientes.
  */
 @Service
 @RequiredArgsConstructor
@@ -24,7 +24,7 @@ public class PublicAccessUseCaseImpl implements PublicAccessPort {
     private final LoginService loginService;
     private final LogoutService logoutService;
     private final RegisterBuyerService registerBuyerService;
-    private final ProductRepositoryPort productRepositoryPort;
+    private final ConsultCatalogService consultCatalogService;
 
     @Override
     public String login(String emailOrDocument, String rawPassword) {
@@ -46,20 +46,11 @@ public class PublicAccessUseCaseImpl implements PublicAccessPort {
 
     @Override
     public List<Product> getPublicCatalog() {
-        return productRepositoryPort.findPublished();
+        return consultCatalogService.getPublicCatalog();
     }
 
     @Override
     public Product getPublicProductDetails(String productId) {
-        if (productId == null || productId.isBlank()) {
-            throw new IllegalArgumentException("El identificador del producto no puede ser nulo o vacío.");
-        }
-        Product product = productRepositoryPort.findById(productId)
-                .orElseThrow(() -> new ProductNotAvailableException("El producto solicitado no existe: " + productId));
-
-        if (!product.isPublished()) {
-            throw new ProductNotAvailableException("El producto solicitado no está disponible para consulta pública.");
-        }
-        return product;
+        return consultCatalogService.getPublicProductDetails(productId);
     }
 }

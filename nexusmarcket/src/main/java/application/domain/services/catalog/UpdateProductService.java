@@ -27,4 +27,21 @@ public class UpdateProductService {
         product.setUpdatedAt(LocalDateTime.now());
         return productRepositoryPort.save(product);
     }
+
+    public Product updateProduct(String vendorId, Product product) {
+        if (product == null || product.getId() == null || product.getId().isBlank()) {
+            throw new IllegalArgumentException("El producto y su ID son obligatorios para actualizar.");
+        }
+
+        Product existing = productRepositoryPort.findById(product.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Producto", product.getId()));
+
+        if (vendorId != null && !vendorId.equals(existing.getVendorId())) {
+            throw new application.domain.exceptions.UnauthorizedRoleOperationException("No tiene autorización para modificar productos de otro vendedor.");
+        }
+
+        product.setVendorId(vendorId);
+        product.setUpdatedAt(LocalDateTime.now());
+        return productRepositoryPort.save(product);
+    }
 }
